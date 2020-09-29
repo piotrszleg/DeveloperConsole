@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class TextEvent : UnityEvent<string>
@@ -12,6 +14,9 @@ public class ConsoleUI : MonoBehaviour
     public InputField input;
     public Text text;
     public TextEvent onInput;
+
+    Queue<string> lines = new Queue<string>();
+    public int maxLines = 10;
 
     void Start()
     {
@@ -31,6 +36,11 @@ public class ConsoleUI : MonoBehaviour
 
     public void Write(string toWrite)
     {
-        text.text += '\n' + toWrite;
+        lines.Enqueue(toWrite);
+        if (lines.Count > maxLines)
+        {
+            lines.Dequeue();
+        }
+        text.text = lines.Aggregate((value, accumulator) => value + '\n' + accumulator);
     }
 }
