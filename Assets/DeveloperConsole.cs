@@ -28,10 +28,28 @@ public class DeveloperConsole : MonoBehaviour
             }
         }
     }
-
-    void Error(string text)
+    
+    void Start()
     {
-        console.Write("ERROR: "+text);
+        Singleton.Initialize(this, ref instance);
+        console = GetComponent<Console>();
+        console.onInput.AddListener(OnInput);
+    }
+
+    void OnInput(string text)
+    {
+        try
+        {
+            object result = ExecuteCommand(text);
+            if (result != null)
+            {
+                console.Write(result.ToString());
+            }
+        }
+        catch (CommandException e)
+        {
+            console.Write("ERROR: " + e.Message);
+        }
     }
 
     class CommandException : Exception {
@@ -61,27 +79,5 @@ public class DeveloperConsole : MonoBehaviour
             parameterValues[i] = Convert.ChangeType(parts[1 + i], parameters[i].ParameterType);
         }
         return action.method.Invoke(action.obj, parameterValues);
-    }
-
-    void OnInput(string text)
-    {
-        try
-        {
-            object result=ExecuteCommand(text);
-            if (result != null)
-            {
-                console.Write("<" + result);
-            }
-        } catch(CommandException e)
-        {
-            console.Write("ERROR: " + e.Message);
-        }
-    }
-
-    void Start()
-    {
-        Singleton.Initialize(this, ref instance);
-        console = GetComponent<Console>();
-        console.onInput.AddListener(OnInput);
     }
 }

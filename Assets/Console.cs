@@ -20,7 +20,7 @@ public class Console : MonoBehaviour
     }
 
     void TextSubmitted(string text) {
-        Write(text);
+        Write("> "+text);
         onInput.Invoke(text);
         input.text = "";
         input.ActivateInputField();
