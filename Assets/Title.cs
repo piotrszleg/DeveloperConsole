@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Title : MonoBehaviour
+public class Title : ConsoleMonoBehaviour
 {
     Text text;
 
@@ -17,14 +17,9 @@ public class Title : MonoBehaviour
         return text.text;
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         text = GetComponent<Text>();
-        Console.Register(this);
-    }
-
-    void OnDestroy()
-    {
-        Console.Unregister(this);
     }
 }

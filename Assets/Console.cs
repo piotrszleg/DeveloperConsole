@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-public class Console : MonoBehaviour
+public class Console : ConsoleMonoBehaviour
 {
     static Console instance;
     public static Console Instance => Singleton.GetInstance(ref instance);
@@ -32,10 +32,11 @@ public class Console : MonoBehaviour
 
     public static void Unregister(object obj)
     {
+        // if instance was already destroyed do nothing
         if (instance == null)
             return;
 
-        instance.actions = Instance.actions
+        instance.actions = instance.actions
             .Where(pair => pair.Value.obj != obj)
             .ToDictionary(pair=>pair.Key, pair=>pair.Value);
     }
@@ -50,17 +51,12 @@ public class Console : MonoBehaviour
         }
     }
 
-    void Start()
+    protected override void Start()
     {
         Singleton.Initialize(this, ref instance);
         console = GetComponent<ConsoleUI>();
         console.onInput.AddListener(OnInput);
-        Register(this);
-    }
-
-    void OnDestroy()
-    {
-        Console.Unregister(this);
+        base.Start();
     }
 
     void OnInput(string text)
@@ -100,7 +96,13 @@ public class Console : MonoBehaviour
         object[] parameterValues = new object[parameters.Length];
         for (int i = 0; i < parameters.Length; i++)
         {
-            parameterValues[i] = Convert.ChangeType(parts[1 + i], parameters[i].ParameterType);
+            try
+            {
+                parameterValues[i] = Convert.ChangeType(parts[1 + i], parameters[i].ParameterType);
+            } catch(FormatException)
+            {
+                throw new CommandException($"Incorrect format of argument number {i}.");
+            }
         }
         return action.method.Invoke(action.obj, parameterValues);
     }
