@@ -20,6 +20,11 @@ public class Title : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
-        DeveloperConsole.Register(this);
+        Console.Register(this);
+    }
+
+    void OnDestroy()
+    {
+        Console.Unregister(this);
     }
 }
