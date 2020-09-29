@@ -5,13 +5,13 @@ public class Title : ConsoleMonoBehaviour
 {
     Text text;
 
-    [Console]
+    // [Command]
     void SetTitle(string value)
     {
         text.text = value;
     }
 
-    [Console]
+    // [Command]
     string GetTitle()
     {
         return text.text;

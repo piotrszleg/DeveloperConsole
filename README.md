@@ -26,7 +26,10 @@ W repozytorium znajduje siê ju¿ scena z interfejsem konsoli i przyk³adowe obiekt
 
 Wszytkie pliki w repozytorium mo¿na dowolnie zmieniaæ, zosta³y stworzone tylko dla uproszczenia zadania.
 
+Niektóre linie skryptów zosta³y zakomentowane tak aby projekt kompilowa³ siê bez jeszcze nieistniej¹cych klas.
+
 Przydatne linki:
+- [Events in Unity](https://docs.unity3d.com/ScriptReference/Events.UnityEvent_1.html)
 - [Creating Custom Attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/creating-custom-attributes)
 - [Getting Runtime Type of an Object](https://docs.microsoft.com/en-us/dotnet/api/system.object.gettype?view=netcore-3.1)
 - [Getting Type Methods](https://docs.microsoft.com/en-us/dotnet/api/system.type.getmethods?view=netcore-3.1)

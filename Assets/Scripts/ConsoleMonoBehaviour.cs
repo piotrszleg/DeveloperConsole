@@ -7,11 +7,11 @@ public abstract class ConsoleMonoBehaviour : MonoBehaviour
 {
     protected virtual void Start()
     {
-        Console.Register(this);
+        // Console.Register(this);
     }
 
     protected virtual void OnDestroy()
     {
-        Console.Unregister(this);
+        // Console.Unregister(this);
     }
 }
